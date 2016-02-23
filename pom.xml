@@ -32,11 +32,6 @@
             <version>2.1.5</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5</version>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
             <version>4.2.0.201601211800-r</version>
@@ -46,7 +41,6 @@
             <artifactId>google-java-format</artifactId>
             <version>0.1-alpha</version>
         </dependency>
-
     </dependencies>
 
 

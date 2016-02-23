@@ -13,6 +13,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static java.nio.file.FileSystems.getDefault;
+import static org.eclipse.jgit.util.FileUtils.RECURSIVE;
+import static org.eclipse.jgit.util.FileUtils.delete;
 
 /**
  * Created by sameer on 19/2/16.
@@ -53,6 +55,14 @@ public class GitHubUtils {
     public void commitFile(String fileName) throws GitAPIException {
         git.add().addFilepattern(fileName).call();
         git.commit().setMessage("Updated file formatting").call();
-        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider("sameer11sep","MArlboro12")).call();
+        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider("sameer11sep", System.getenv("GIT_PASSWORD"))).call();
+    }
+
+    public void removeRepo() {
+        try {
+            delete(new File(REPO_HOME), RECURSIVE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

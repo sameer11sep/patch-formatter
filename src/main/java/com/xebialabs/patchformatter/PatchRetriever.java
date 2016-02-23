@@ -25,13 +25,16 @@ public class PatchRetriever {
     Formatter formatter = new Formatter();
 
 
-    public void foo(int prId) throws IOException {
+    public void formatPatch(int prId) throws IOException {
         List<Patch> patches = retrievePatch(prId);
         patches.stream().forEach(p -> {
             GitHubUtils gitHubUtils = new GitHubUtils(p.getBranch());
             try {
                 String inputSource = gitHubUtils.readFile(p.getFileName());
-                gitHubUtils.replaceFileContents(p.getFileName(), formatter.formatSource(inputSource));
+                List<com.google.common.collect.Range<Integer>> ranges = p.getLineRanges().stream().map(r -> com.google.common.collect.Range.closed(r.getStart(), r.getEnd())).collect(Collectors.toList());
+                System.out.println(ranges);
+                String formattedSource = formatter.formatSource(inputSource);
+                gitHubUtils.replaceFileContents(p.getFileName(), formattedSource);
                 gitHubUtils.commitFile(p.getFileName());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -39,8 +42,9 @@ public class PatchRetriever {
                 e.printStackTrace();
             } catch (GitAPIException e) {
                 e.printStackTrace();
+            } finally {
+                gitHubUtils.removeRepo();
             }
-            //formatter.formatSource()
         });
     }
 

@@ -11,6 +11,6 @@ public class PatchRetrieverTest {
     @Test
     public void shouldFetchPrPatch() throws IOException {
         PatchRetriever retriever=new PatchRetriever();
-        retriever.foo(3);
+        retriever.formatPatch(5);
     }
 }
